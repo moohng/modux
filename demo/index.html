@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>modux demo</title>
+</head>
+<body>
+  <div id="counter"></div>
+  <div>
+    <button onclick="onIncrease()">加 1</button>
+    <button onclick="onDecrease()">减 1</button>
+  </div>
+
+  <script src="modux.js"></script>
+  <script>
+    const { createStore, applyMiddleware } = modux
+
+    const $counter = document.querySelector('#counter')
+
+    function updateView(data) {
+      $counter.innerText = data.count
+    }
+
+    function reducer(state, action) {
+      switch (action.type) {
+        case 'add':
+          return { ...state, count: state.count + 1 }
+        case 'decs':
+          return { ...state, count: state.count - 1 }
+        default:
+          return initState
+      }
+    }
+    function logger({ getState, dispatch }) {
+      return next => action => {
+        console.log('-----logger----', next)
+        return next(action)
+      }
+    }
+    function thunk({ dispatch, getState }) {
+      return next => action => {
+        if (typeof action === 'function') {
+          console.log('------thunk----', action)
+          return action(dispatch, getState)
+        }
+        return next(action)
+      }
+    }
+    const initState = { count: 0 }
+    const store = createStore(reducer, initState, applyMiddleware(logger, thunk))
+
+    updateView(store.getState())
+    store.subscribe(() => {
+      updateView(store.getState())
+    })
+
+    function onIncrease() {
+      store.dispatch({ type: 'add' })
+    }
+
+    function onDecrease() {
+      store.dispatch({ type: 'decs' })
+    }
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+{
+  "name": "modux",
+  "version": "1.0.0",
+  "description": "",
+  "module": "src/index.js",
+  "main": "lib/index.js",
+  "browser": "dist/dan.min.js",
+  "scripts": {
+    "demo": "npm run dev",
+    "dev": "rollup -c config/rollup.config.js -w --server",
+    "watch": "rollup -c config/rollup.config.js -w",
+    "build": "rollup -c config/rollup.config.js --mini",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moohng/modux.git"
+  },
+  "author": "Kevin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/moohng/modux/issues"
+  },
+  "homepage": "https://github.com/moohng/modux#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.6.0",
+    "@babel/preset-env": "^7.6.0",
+    "rollup": "^1.21.4",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-clear": "^2.0.7",
+    "rollup-plugin-serve": "^1.0.1",
+    "rollup-plugin-terser": "^5.1.2"
+  }
+}
